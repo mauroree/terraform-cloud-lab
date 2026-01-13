@@ -1,20 +1,40 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Cadastro</title>
 </head>
 <body>
-  <h1>Formulário de Cadastro</h1>
+  <h2>Cadastro</h2>
 
-  <form>
-    <label>Nome:</label><br>
-    <input type="text" name="nome"><br><br>
-
-    <label>Email:</label><br>
-    <input type="email" name="email"><br><br>
-
+  <form id="registerForm">
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Senha" required />
     <button type="submit">Enviar</button>
   </form>
+
+  <p id="response"></p>
+
+  <script>
+    const form = document.getElementById("registerForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const response = await fetch("http://backend-api:3000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+      document.getElementById("response").innerText = data.message;
+    });
+  </script>
 </body>
 </html>

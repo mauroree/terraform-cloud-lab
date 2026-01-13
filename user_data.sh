@@ -1,20 +1,27 @@
 #!/bin/bash
 
+# Atualiza sistema
 apt-get update -y
 
+# Instala Docker
 apt-get install -y docker.io
 
+# Sobe Docker
 systemctl start docker
 systemctl enable docker
 
-usermod -aG docker ubuntu
+# Cria rede Docker
+docker network create app-network
 
-docker pull mrxjr/formulario-web:latest
-
-docker rm -f formulario || true
-
+# Backend
 docker run -d \
-  -p 80:80 \
-  --name formulario \
-  mrxjr/formulario-web:latest
+  --name backend-api \
+  --network app-network \
+  mrxjr/backend-api:latest
 
+# Frontend
+docker run -d \
+  --name frontend-nginx \
+  --network app-network \
+  -p 80:80 \
+  mrxjr/frontend-nginx:latest
