@@ -17,6 +17,8 @@ docker network create app-network
 docker run -d \
   --name backend-api \
   --network app-network \
+  -e AWS_REGION=us-east-2 \
+  -e DYNAMODB_TABLE=users \
   mrxjr/backend-api:latest
 
 # Frontend
@@ -25,3 +27,5 @@ docker run -d \
   --network app-network \
   -p 80:80 \
   mrxjr/frontend-nginx:latest
+  
+  
