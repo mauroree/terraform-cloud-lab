@@ -37,3 +37,28 @@ resource "aws_iam_instance_profile" "ec2_profile" {
   name = "ec2-dynamodb-profile"
   role = aws_iam_role.ec2_role.name
 }
+
+resource "aws_iam_policy" "cloudwatch_logs_policy" {
+  name        = "ec2-cloudwatch-logs"
+  description = "Permite que EC2 envie logs para CloudWatch"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+          "logs:DescribeLogStreams"
+        ]
+        Resource = "arn:aws:logs:*:*:log-group:/ec2/*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "attach_cloudwatch_logs" {
+  role       = aws_iam_role.ec2_role.name
+  policy_arn = aws_iam_policy.cloudwatch_logs_policy.arn
+}
