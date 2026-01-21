@@ -1,5 +1,5 @@
 resource "aws_security_group" "ec2_sg" {
-  name        = "ec2-asg-sg"
+  name = "ec2-asg-sg-${var.environment}"
   description = "Security Group das EC2 do Auto Scaling"
 
   ingress {
@@ -19,7 +19,7 @@ resource "aws_security_group" "ec2_sg" {
 }
 
 resource "aws_launch_template" "app_lt" {
-  name_prefix   = "app-lt-"
+  name_prefix = "app-lt-${var.environment}-"
   image_id      = data.aws_ami.ubuntu.id
   instance_type = var.instance_type
 
@@ -37,7 +37,7 @@ resource "aws_launch_template" "app_lt" {
 }
 
 resource "aws_autoscaling_group" "app_asg" {
-  name = "app-asg"
+  name = "app-asg-${var.environment}"
 
   min_size         = 1
   desired_capacity = 1

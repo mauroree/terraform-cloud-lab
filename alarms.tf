@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_metric_alarm" "tg_unhealthy_hosts" {
-  alarm_name          = "tg-unhealthy-hosts"
+  alarm_name          = "tg-unhealthy-hosts-${var.environment}"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 1
   metric_name         = "UnHealthyHostCount"
@@ -17,7 +17,7 @@ resource "aws_cloudwatch_metric_alarm" "tg_unhealthy_hosts" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "asg_cpu_high" {
-  alarm_name          = "asg-cpu-high"
+  alarm_name          = "asg-cpu-high-${var.environment}"
   namespace           = "AWS/EC2"
   metric_name         = "CPUUtilization"
   statistic           = "Average"
@@ -32,4 +32,3 @@ resource "aws_cloudwatch_metric_alarm" "asg_cpu_high" {
 
   alarm_description = "Dispara quando CPU média do ASG fica acima de 80% por 10 minutos"
 }
-

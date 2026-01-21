@@ -1,5 +1,5 @@
 resource "aws_iam_role" "ec2_role" {
-  name = "ec2-dynamodb-role"
+  name = "ec2-dynamodb-role-${var.environment}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -14,7 +14,7 @@ resource "aws_iam_role" "ec2_role" {
 }
 
 resource "aws_iam_policy" "dynamodb_put_policy" {
-  name = "dynamodb-users-putitem"
+ name = "dynamodb-users-putitem-${var.environment}"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -34,12 +34,13 @@ resource "aws_iam_role_policy_attachment" "attach_dynamodb_policy" {
 }
 
 resource "aws_iam_instance_profile" "ec2_profile" {
-  name = "ec2-dynamodb-profile"
+  name = "ec2-dynamodb-profile-${var.environment}"
   role = aws_iam_role.ec2_role.name
 }
 
 resource "aws_iam_policy" "cloudwatch_logs_policy" {
-  name        = "ec2-cloudwatch-logs"
+  name = "ec2-cloudwatch-logs-${var.environment}"
+  
   description = "Permite que EC2 envie logs para CloudWatch"
 
   policy = jsonencode({

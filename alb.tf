@@ -1,5 +1,5 @@
 resource "aws_security_group" "alb_sg" {
-  name        = "alb-sg"
+  name = "alb-sg-${var.environment}"
   description = "Security Group do Application Load Balancer"
 
   ingress {
@@ -19,7 +19,7 @@ resource "aws_security_group" "alb_sg" {
 }
 
 resource "aws_lb" "app_alb" {
-  name               = "app-alb"
+  name               = "app-alb-${var.environment}"
   load_balancer_type = "application"
   internal           = false
 
@@ -47,7 +47,7 @@ data "aws_vpc" "default" {
 }
 
 resource "aws_lb_target_group" "app_tg" {
-  name     = "app-tg"
+  name = "app-tg-${var.environment}"
   port     = 80
   protocol = "HTTP"
   vpc_id  = data.aws_vpc.default.id
