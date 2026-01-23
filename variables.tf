@@ -16,11 +16,6 @@ variable "instance_name" {
   default     = "terraform-web-lab"
 }
 
-variable "key_name" {
-  description = "Nome do Key Pair na AWS"
-  type        = string
-}
-
 variable "environment" {
   description = "Ambiente de deploy (dev ou prod)"
   type        = string
