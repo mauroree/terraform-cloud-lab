@@ -1,5 +1,0 @@
-region        = "us-east-2"
-instance_type = "t3.micro"
-instance_name = "terraform-web-lab"
-key_name      = "docker key"
-allowed_ip    = "0.0.0.0/0"
