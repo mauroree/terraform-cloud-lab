@@ -21,11 +21,6 @@ variable "key_name" {
   type        = string
 }
 
-variable "allowed_ip" {
-  description = "IP permitido para SSH"
-  type        = string
-}
-
 variable "environment" {
   description = "Ambiente de deploy (dev ou prod)"
   type        = string
