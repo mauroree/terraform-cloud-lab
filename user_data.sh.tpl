@@ -45,19 +45,19 @@ cat << 'EOF' > /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
         "collect_list": [
           {
             "file_path": "/var/log/cloud-init.log",
-            "log_group_name": "/ec2/cloud-init",
+            "log_group_name": "/ec2/cloud-init-${environment}",
             "log_stream_name": "{instance_id}",
             "timezone": "UTC"
           },
           {
             "file_path": "/var/log/syslog",
-            "log_group_name": "/ec2/syslog",
+            "log_group_name": "/ec2/syslog-${environment}",
             "log_stream_name": "{instance_id}",
             "timezone": "UTC"
           },
           {
            "file_path": "/var/log/backend/backend.log",
-           "log_group_name": "/ec2/app",
+           "log_group_name": "/ec2/app-${environment}",
            "log_stream_name": "{instance_id}",
            "timezone": "UTC"
           }

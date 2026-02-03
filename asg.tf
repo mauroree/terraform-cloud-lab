@@ -31,7 +31,11 @@ resource "aws_launch_template" "app_lt" {
     name = aws_iam_instance_profile.ec2_profile.name
   }
 
-  user_data = base64encode(file("user_data.sh"))
+  user_data = base64encode(
+  templatefile("${path.module}/user_data.sh.tpl", {
+    environment = var.environment
+  })
+)
 }
 
 resource "aws_autoscaling_group" "app_asg" {
