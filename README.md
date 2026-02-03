@@ -95,6 +95,26 @@ A observabilidade do sistema é feita com:
 
 Esses mecanismos permitem monitorar a saúde do sistema e reagir rapidamente a incidentes.
 
+## Testes de Falha e Comportamento dos Alarmes
+
+Foram realizados testes manuais de falha para validar o comportamento da infraestrutura
+e dos alarmes em cenários reais de indisponibilidade.
+
+### Teste Executado
+- Término manual de uma instância EC2 do Auto Scaling Group via Console da AWS
+- Acesso ao DNS do Application Load Balancer durante a falha
+- Retorno observado: **502 Bad Gateway**
+
+### Comportamento Observado
+- Disparo do alarme **HTTPCode_ELB_5XX_Count**, indicando indisponibilidade de infraestrutura
+- Disparo do alarme de **target unhealthy** no Target Group
+- Criação automática de nova instância pelo Auto Scaling Group
+- Recuperação do serviço sem intervenção manual
+- Alarmes retornaram para estado `OK` após a normalização
+
+Este teste valida o ciclo operacional:
+deploy → falha → alerta → recuperação
+
 ---
 
 ## CI/CD
